@@ -1,0 +1,35 @@
+name: Check qmd files
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  check-qmd-files:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+      - name: Install R
+        uses: r-lib/actions/setup-r@v2
+        with:
+          install-r: true
+      - name: Install R dependencies
+        uses: r-lib/actions/setup-r-dependencies@v2
+        with:
+          packages: |
+            quarto
+            rmarkdown
+      - name: Render qmd files
+        uses: quarto-dev/quarto-actions/render@v2
+        with:
+          path: '*.qmd'
+      - name: Create issue if rendering fails
+        uses: JasonEtco/create-an-issue@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          title: 'QMD files failed to render'
+          body: 'The following QMD files failed to render: ${{ steps.render-qmd-files.outputs.failed_files }}'
+          labels: 'bug'
+        if: ${{ steps.render-qmd-files.outputs.failed_files != '' }}
