@@ -14,7 +14,7 @@ bibliography: references.bib
 
 ## R Package jmpwashdata
 
-For this analysis we will use the **jmpwashdata** R Package by @jmpwashdata. The package contains all data compiled by the [WHO/UNICEF Joint Monitoring Programme (JMP)](https://washdata.org).
+For this analysis we will use the **jmpwashdata** R Package by @jmpwashdata. The package contains all data compiled by the [WHO/UNICEF Joint Monitoring Programme (JMP)](https://washdata.org). 
 
 ```{r}
 #| label: load-packages
